@@ -1,0 +1,26 @@
+version: '3'
+networks:
+  net:
+    driver: bridge
+    ipam:
+      config:
+      - subnet: 172.18.0.0/24
+
+services:
+  server:
+    build: server/
+    hostname: server-con
+    container_name: server-con
+    image: my-server:1.0
+    networks:
+      net:
+        ipv4_address: 172.18.0.2
+  client:
+    build: client/
+    hostname: client-con
+    container_name: client-con
+    image: my-client:1.0
+    networks:
+      net:
+    depends_on:
+      - server
