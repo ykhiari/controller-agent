@@ -9,4 +9,6 @@ with open(config_file_path,"r") as jsonfile:
     config = json.load(jsonfile)
 
 clt_socket = ClientSocket(config["server_ip"],config["port"])
-clt_socket.send_msg()
+clt_socket.send_msg("This is a custom message")
+clt_socket.send_msg("This is a second custom message")
+clt_socket.send_msg("stop now")
