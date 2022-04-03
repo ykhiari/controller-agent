@@ -1,11 +1,12 @@
 import socket
+import json
+from os import environ
+from client_socket import ClientSocket
 
-HOST = "172.18.0.2"
-PORT = 12345
+config_file_path = environ["CONFIG_FILE"]
 
-with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-    s.connect((HOST, PORT))
-    s.sendall(b"Hello, world")
-    data = s.recv(1024)
+with open(config_file_path,"r") as jsonfile:
+    config = json.load(jsonfile)
 
-print(f"Received {data!r}")
+clt_socket = ClientSocket(config["server_ip"],config["port"])
+clt_socket.send_msg()

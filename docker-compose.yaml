@@ -11,6 +11,8 @@ services:
     hostname: server-con
     container_name: server-con
     image: my-server:1.0
+    environment:
+      - CONFIG_FILE=/home/app/config.json
     networks:
       net:
         ipv4_address: 172.18.0.2
@@ -19,6 +21,9 @@ services:
     hostname: client-con
     container_name: client-con
     image: my-client:1.0
+    command: tail -f anything
+    environment:
+      - CONFIG_FILE=/home/app/config.json
     networks:
       net:
     depends_on:

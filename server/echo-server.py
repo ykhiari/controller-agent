@@ -1,16 +1,12 @@
 import socket
+import json
+from os import environ
+from server_socket import ServerSocket
 
-HOST = "0.0.0.0"
-PORT = 12345
+config_file_path = environ["CONFIG_FILE"]
 
-with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-    s.bind((HOST, PORT))
-    s.listen()
-    conn, addr = s.accept()
-    with conn:
-        print(f"Connected by {addr}")
-        while True:
-            data = conn.recv(1024)
-            if not data:
-                break
-            conn.sendall(data)
+with open(config_file_path,"r") as jsonfile:
+    config = json.load(jsonfile)
+
+srv_socket = ServerSocket(config["server_listner"],config["port"])
+srv_socket.receive_msg()
